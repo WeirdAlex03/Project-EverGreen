@@ -2,7 +2,13 @@
 name = "project-evergreen"
 version = "0.1.0"
 description = "Project for CSE312 in Fall 2024."
-authors = ["Eric-Butcher <ebutcher66@gmail.com>"]
+authors = [
+    "Eric Butcher <ericbutc@buffalo.edu>", 
+    "Alex McHugh <apmchugh@buffalo.edu>", 
+    "Sumanyu Janaparedy <sumanyuj@buffalo.edu>", 
+    "Rances Colon <rancesco@buffalo.edu>", 
+    "Gianna Germain <ggermain@buffalo.edu>"
+]
 readme = "README.md"
 package-mode = false
 
