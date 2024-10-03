@@ -3,13 +3,11 @@ services:
   mongo:
     image: mongo:4.2.5
   web:
-    build: .
+    build: ./evergreen
     command: python manage.py runserver 0.0.0.0:8080
-    volumes:
-      - .:/code
     ports:
       - '8080:8080'
-    enviroment:
+    environment:
       WAIT_HOSTS: mongo:27017
     depends_on:
-      - db 
+      - mongo 

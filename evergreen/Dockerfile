@@ -1,11 +1,10 @@
 #can change python version if we want...just put 3.8 since my computer runs 3.9.13
 FROM python:3.8 
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-WORKDIR /code
+ENV HOME /root
+WORKDIR /root
 
-COPY requirements.txt /code/
+COPY . . 
 RUN pip3 install -r requirements.txt
 COPY . /code/
 
