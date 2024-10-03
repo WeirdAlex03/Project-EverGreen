@@ -1,0 +1,16 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:4.2.5
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8080
+    volumes:
+      - .:/code
+    ports:
+      - '8080:8080'
+    enviroment:
+      WAIT_HOSTS: mongo:27017
+    depends_on:
+      - db
+    
