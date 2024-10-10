@@ -36,3 +36,9 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+.login {
+    width: 50%;
+    background-color: #1f6824;
+    padding: 10px;
+}
