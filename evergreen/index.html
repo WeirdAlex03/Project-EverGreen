@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Evergreen</title>
-    <link rel="stylesheet" href="styles.css">
+     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body onload="start()">
     <header>
@@ -23,7 +24,7 @@
 
         <section id="contact">
             <h2>Contact Us</h2>
-            <p>If you have any questions or join our club, feel free to reach out!</p>
+            <p>If you have any questions or want to join our club, feel free to reach out!</p>
             <p>Join our Discord: <a href="https://discord.com/invite/QMHjt65z7a">https://discord.com/invite/QMHjt65z7a</a></p>
         </section>
     </main>
@@ -61,6 +62,7 @@
         </form>
     </div>
 
-<script src="functions.js"></script>
+    <script src="{% static 'js/functions.js' %}"></script>
+    <img src="{% static 'images/plant.jpg' %}" alt="A logo pic of a plant">
 </body>
 </html>

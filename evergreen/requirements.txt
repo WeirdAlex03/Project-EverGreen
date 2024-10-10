@@ -1,5 +1,3 @@
-#my Dgango version = 4.2.16
-
 Django
 pymongo 
 bcrypt
