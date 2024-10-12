@@ -4,3 +4,4 @@ Django
 pymongo 
 bcrypt
 whitenoise
+email-validator
