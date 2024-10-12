@@ -3,3 +3,4 @@
 Django
 pymongo 
 bcrypt
+whitenoise
