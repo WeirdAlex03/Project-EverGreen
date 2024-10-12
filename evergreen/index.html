@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
     {% load static %}
-
+    <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
-
+   
     <title>Project Evergreen</title>
      <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
@@ -51,7 +49,7 @@
             <br/>
             <br/>
         </form>
-    
+
         Login:
         <form action="/login" method="post" enctype="application/x-www-form-urlencoded">
             <label>UB Email:
@@ -65,7 +63,7 @@
             <br/>
         </form>
     </div>
-
+    
     <script src="{% static 'js/functions.js' %}"></script>
     <img src="{% static 'images/plant.jpg' %}" alt="A logo pic of a plant">
 </body>
