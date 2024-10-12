@@ -8,9 +8,11 @@ COPY pyproject.toml .
 RUN pip3 install poetry 
 RUN poetry config virtualenvs.create false --local
 
+
 RUN poetry install 
 COPY . .
 
 EXPOSE 8080
 SHELL [ "poetry", "run" ]
 CMD [ "python3","manage.py","runserver","0.0.0.0:8080"]
+
