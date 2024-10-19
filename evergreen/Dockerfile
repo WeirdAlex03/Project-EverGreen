@@ -21,8 +21,8 @@ RUN chmod +x /wait
 
 SHELL [ "poetry", "run" ]
 
-CMD [ "python3","manage.py","makemigrations", "--no-input"]
-CMD [ "python3","manage.py","migrate", "--no-input"]
+RUN ["/wait"]
+RUN [ "python3","manage.py","makemigrations", "--no-input"]
+RUN [ "python3","manage.py","migrate", "--no-input"]
 
 CMD [ "python3","manage.py","runserver","0.0.0.0:8080"]
-
