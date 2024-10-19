@@ -6,12 +6,12 @@ def validate_email(email: str, check_deliverability=False) -> bool:
 
     Validation requirements:
     - Valid University at Buffalo email only
-      - User is comprised of letters followed by optional numbers
+      - Username is composed of letters followed by optional numbers
       - User is 4-8 chars, inclusive
       - Server is (optional subdomain).buffalo.edu
 
     :param email: The email addresses from the user to validate
-    :param check_deliverability: Whether or not to perform a DNS query to see  \
+    :param check_deliverability: Whether to perform a DNS query to see  \
     if the domain can receive mail. Recommended to use `True` on registration, \
     `False` on regular login. See https://pypi.org/project/email-validator/
     

@@ -39,6 +39,8 @@
             <br/>
             <label>Password:&nbsp;
                 <input type="password" name="password">
+                
+                <button type="button" onclick="validatePassword()">Check Password</button>
             </label>
             <br/>
             <label>Confirm Password:&nbsp;
@@ -48,6 +50,38 @@
             <br/>
             <br/>
         </form>
+
+
+        <script>
+            async function validate_pass() {
+
+
+                const password = document.getElementById("password").value;
+    
+                const response = await fetch("{% url 'validate_pass' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+
+                    body: `password=${encodeURIComponent(password)}`,
+                });
+    
+                const result = await response.json();
+                const messageDiv = document.getElementById("passwordMessage");
+                
+                // make it green is valid
+                if (result.is_valid) {
+                    messageDiv.innerHTML = `<p style="color: green;">${result.message}</p>`;
+                
+                } 
+                // make it red is BAD!!
+                else 
+                {
+                    messageDiv.innerHTML = `<p style="color: red;">${result.message}</p>`;
+                }
+            }
+        </script>
 
         Login:
         <form action="/login" method="post" enctype="application/x-www-form-urlencoded">
