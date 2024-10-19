@@ -1,43 +1,59 @@
+# Create your views here
+#views are just the handler for shit that will be pass into urls.py
+
+
 from django.shortcuts import render
-from django.http import HttpResponse, FileResponse, HttpResponseNotFound
-from django.template import loader
-import mimetypes
+from django.http import HttpResponse, HttpResponseNotFound
 from django.conf import settings
+import mimetypes
+from pathlib import Path
+from urllib.parse import quote
 
 
-
-# Create your views here.
-
-# handles request 
 
 def getFileType(filePath):
-    fileType = mimetypes.guess_type(filePath)
-    return fileType
+    return mimetypes.guess_type(filePath)[0]  
 
+def indexHandler(request):
+    return render(request, 'index.html')
 
-def indexHandler(request): 
-    template = str(loader.get_template('index.html'))
-    return HttpResponse(render(request,template))
+def fileHandler(request, fileName): # can handle img and text 
+    sanitizedfileName = quote(fileName) # get a clean full file path 
+    path = Path(settings.STATIC_ROOT) / sanitizedfileName
 
+    allowedType = {'.css', '.html', '.js', '.png', '.jpg', '.jpeg', '.gif', '.mp3', '.mp4', '.xml', '.json', '.pdf'} # can add more, 
 
-def textHandler(request):
-    fileType = getFileType(request.path)
-    if fileType in ['js', 'css', 'html']:
-        template = str(loader.get_template(request.path))
-
-        response = HttpResponse()
-
-        response['content'] = str(loader.get_template(request.path))
-        response['Content-Length'] = len(response.content)
-        response['content_type'] = fileType
-        response['X-Content-Type-Options'] = "nosniff"
+    if not path.suffix.lower() in allowedType: # to deal with user uploads 
+        return HttpResponseNotFound("404 - File type not allowed")
+    
+    #deal with /../ attacks 
+    rootPath = Path(settings.STATIC_ROOT).resolve() #.resolve get absolute path 
+    if not path.resolve().is_relative_to(rootPath):
+        return HttpResponseNotFound("404 - Invalid file path")
+    
+    if path.exists() and path.is_file(): # make sure its not a directory 
+        contentType = getFileType(path)
         
-        #Content-Length
-        #Content-Type
-        #X-Content-Type-Options: nosniff
-        #HTTP/1.1 200 OK
+        try:
+            with open(path, 'rb') as file:
+                content = file.read()
 
+            response = HttpResponse(content, content_type=contentType)
+            response['X-Content-Type-Options'] = "nosniff"
+            response['Content-Length'] = str(len(content))
+
+            print(response)
+        
+            return response
+        
+        except OSError as e: # catch most of em, like FileNotFoundError  
+            return HttpResponseNotFound(f"404 - Error reading file: {e}")
+            #return render(request, '404.html', status=404) when make 404 pages 
+        
     else:
-        return HttpResponseNotFound("HTTP/1.1 404 Not Found OK")
-            
-# def imgHandler(request):
+        return HttpResponseNotFound("404 Not Found")
+    
+def addCookies(response, cookies): # add all cookies from the give dic to the response
+    for cookieName, cookieValue in cookies.items():
+        response.set_cookie(cookieName, cookieValue)
+    return response

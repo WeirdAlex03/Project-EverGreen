@@ -20,6 +20,15 @@ from django.urls import path
 from eg_app import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('',views.index,name='index'),
+    path("admin/", admin.site.urls), 
+    path('', views.indexHandler, name='index'), 
+    path('styles.css', views.fileHandler, name='styles'),  
+    path('functions.js', views.fileHandler, name='functions'), 
 ]
+
+
+# path(route,view,kwargs=None, name=None)
+# route: the URL of the path 
+# view: function from.py view that will be called 
+#kwargs: Optional arguments to be passed to the view
+#name: An optional arguments for the URL pattern 
