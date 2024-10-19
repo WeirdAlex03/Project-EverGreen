@@ -1,13 +1,22 @@
 version: '3.9'
 services:
-  mongo:
-    image: mongo:4.2.5
+  database:
+    image: postgres:17
+    restart: always
+    shm_size: 128mb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: database_name
+      POSTGRES_USERNAME: username123 # this is insecure - needs to be changed
+      POSTGRES_PASSWORD: password123 # this is insecure - needs to be changed
+
   django:
     build: ./evergreen
     command: python manage.py runserver 0.0.0.0:8080
     ports:
       - '8080:8080'
     environment:
-      WAIT_HOSTS: mongo:27017
+      WAIT_HOSTS: database:5432
     depends_on:
-      - mongo 
+      - database 
