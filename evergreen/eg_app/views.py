@@ -1,8 +1,10 @@
 from django.shortcuts import render
 
-import util.validators as val
+import eg_app.eg_util.validators as val
 
 from django.http import JsonResponse
+
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -10,13 +12,14 @@ from django.http import JsonResponse
 def index(request):
     return render(request,'index.html')
 
-def password_valid_view(request):
+@csrf_exempt
+def validate_pass(request):
     if request.method == "POST":
         password = request.POST.get("password")
         # this uses the method from Alex's Method
         isValid = val.validate_password(password)
-
-        return JsonResponse({"valid_pass":isValid})
+        print(isValid)
+        return JsonResponse({"valid_pass":str(isValid)})
 
 
 

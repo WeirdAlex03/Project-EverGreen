@@ -38,9 +38,9 @@
             </label>
             <br/>
             <label>Password:&nbsp;
-                <input type="password" name="password">
+                <input type="password" id="password">
 
-                <button type="button" onclick="validatePassword()">Check Password</button>
+                <button type="button" onclick="validate_pass()">Check Password</button>
             </label>
             <br/>
             <label>Confirm Password:&nbsp;
@@ -50,6 +50,8 @@
             <br/>
             <br/>
         </form>
+
+        <div id="passwordMessage"></div>
 
 
         <script>
@@ -68,17 +70,24 @@
                 });
 
                 const result = await response.json();
+
                 const messageDiv = document.getElementById("passwordMessage");
 
+
                 // make it green is valid
-                if (result.is_valid) {
-                    messageDiv.innerHTML = `<p style="color: green;">${result.message}</p>`;
+                if (result.valid_pass === "True") {
+
+                    messageDiv.style.color = "green";
+
+                    messageDiv.textContent = "VALID PASSWORD";
+
 
                 }
                 // make it red is BAD!!
                 else
                 {
-                    messageDiv.innerHTML = `<p style="color: red;">${result.message}</p>`;
+                    messageDiv.style.color = "red"
+                    messageDiv.textContent = "BAD PASSWORD"
                 }
             }
         </script>
