@@ -20,4 +20,4 @@ Before starting up the container, make sure to run the command `python manage.py
 
 In the root directory of the project, type `docker compose up --build --force-recreate` to spin up the containers. 
 
-After the containers are up you can use the command `docker compose exec django python manage.py createsuperuser`. You can then go to the `/admin` panel and login with those credentials that you used to create the super user. 
+After the containers are up you can use the command `docker compose exec django python manage.py migrate` for the database migrations and then `docker compose exec django python manage.py createsuperuser` to make your admin user. You can then go to the `/admin` panel and login with those credentials that you used to create the super user. 

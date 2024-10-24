@@ -81,9 +81,9 @@ WSGI_APPLICATION = "evergreen.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "username123", # from docker-compose.yml, this is insecure
-        "PASSWORD": "password123", # from docker-compose.yml, this is insecure
+        "NAME": os.getenv("POSTGRES_DB"),
+        "USER": os.getenv("POSTGRES_USER"), # from docker-compose.yml, this is insecure
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"), # from docker-compose.yml, this is insecure
         "HOST": "database", # service name from docker-compose.yml
         "PORT": 5432
     }
