@@ -1,5 +1,5 @@
 from django.test import TestCase
-from eg_app.eg_util.validators import validate_email, validate_password
+from eg_app.util.validators import validate_email, validate_password
 
 # c-spell:disable - Don't spellcheck the emails
 
