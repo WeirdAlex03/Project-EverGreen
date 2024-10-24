@@ -21,7 +21,7 @@ def fileHandler(request, fileName): # can handle img and text
     sanitizedfileName = quote(fileName) # get a clean full file path 
     path = Path(settings.STATIC_ROOT) / sanitizedfileName
 
-    allowedType = {'.css', '.html', '.js', '.png', '.jpg', '.jpeg', '.gif', '.mp3', '.mp4', '.xml', '.json', '.pdf'} # can add more, 
+    allowedType = {'.css', '.html', '.js', '.png', '.jpg', '.jpeg', '.gif', '.mp3', '.mp4', '.xml', '.json', '.pdf','.ico'} # can add more, 
 
     if not path.suffix.lower() in allowedType: # to deal with user uploads 
         return HttpResponseNotFound("404 - File type not allowed")
@@ -40,16 +40,16 @@ def fileHandler(request, fileName): # can handle img and text
 
             response = HttpResponse(content, content_type=contentType)
             response['X-Content-Type-Options'] = "nosniff"
-            response['Content-Length'] = str(len(content))
+            #response['Content-Length'] = str(len(content)) is need for very large file, django handles is not
 
             print(response)
         
             return response
         
         except OSError as e: # catch most of em, like FileNotFoundError  
-            return HttpResponseNotFound(f"404 - Error reading file: {e}")
+            return HttpResponseNotFound(f"404 Not Found")
             #return render(request, '404.html', status=404) when make 404 pages 
-        
+
     else:
         return HttpResponseNotFound("404 Not Found")
     

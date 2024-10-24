@@ -24,6 +24,8 @@ urlpatterns = [
     path('', views.indexHandler, name='index'), 
     path('styles.css', views.fileHandler, name='styles'),  
     path('functions.js', views.fileHandler, name='functions'), 
+    #path('/register',view.registerHanler,name = 'register')
+    #path('/login', views.loginHandler, name='login'), 
 ]
 
 
