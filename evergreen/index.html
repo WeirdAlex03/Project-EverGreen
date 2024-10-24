@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Cache-control" content="no-store">
     <title>Project Evergreen</title>
      <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+     <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+
+     <div class="logo">
+        <img src="{% static 'images/plant.jpg' %}" alt="A logo pic of a plant" width = "100" height = "100">
+    </div>
 </head>
+
 <body onload="start()">
     <header>
         <h1>Project Evergreen</h1>
         <nav>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
+            <a href="#plant-chat">Plant Chat</a>
         </nav>
     </header>
 
@@ -30,129 +38,107 @@
             <p>Join our Discord: <a href="https://discord.com/invite/QMHjt65z7a">https://discord.com/invite/QMHjt65z7a</a></p>
         </section>
     </main>
-    <div class="login">
-        Registration:
-        <form action="/register" method="post" enctype="application/x-www-form-urlencoded">
-            <label>UB Email:
-                <input type="email" name="email"/>
-            </label>
-            <br/>
-            <label>Password:&nbsp;
-                <input type="password" name="password">
-            </label>
-            <br/>
-            <label>Confirm Password:&nbsp;
-                <input type="password" name="confirm password">
-            </label>
-            <input type="submit" value="Post">
-            <br/>
-            <br/>
-        </form>
+    
+    <section id="plant-chat">
+        <h2>Plant Chat</h2>
+        <div class="contents">
+            <div class="login">
+                Registration:
+                <form action="/register" method="post" enctype="application/x-www-form-urlencoded">
+                   {% csrf_token %}
+                   <label>UB Email:
+                     <input type="email" id="email" name="email"/>
+                   </label>
+                   <br/>
+                   <label>Password:&nbsp;
+                     <input type="password" id="password" name="password">
+                   </label>
 
-        Login:
-        <form action="/login" method="post" enctype="application/x-www-form-urlencoded">
-            <label>UB Email:
-                <input type="email" name="email"/>
-            </label>
-            <br/>
-            <label>Password:&nbsp;
-                <input type="password" name="password">
-            </label>
-            <input type="submit" value="Post">
-            <br/>
-        </form>
-    </div>
+                   <button type="button" onclick="validate()">Validate Registration</button>
+                   <br/>
+                   <label>Confirm Password:&nbsp;
+                      <input type="password" name="confirm_password">
+                   </label>
+                      <input type="submit" value="Post">
+                   <br/>
+                   <br/>
+                </form>
 
-    <div class="login">
-        Registration:
-        <form action="/register" method="post" enctype="application/x-www-form-urlencoded">
-            {% csrf_token %}
-            <label>UB Email:
-                <input type="email" id="email" name="email"/>
-            </label>
-            <br/>
-            <label>Password:&nbsp;
-                <input type="password" id="password" name="password">
+                <div id="passwordMessage"></div>
+              
+                Login:
+                <form action="/login" method="post" enctype="application/x-www-form-urlencoded">
+                    {% csrf_token %}
+                    <label>UB Email:
+                        <input type="email" name="email"/>
+                    </label>
+                    <br/>
+                    <label>Password:&nbsp;
+                        <input type="password" name="password">
+                    </label>
+                    <input type="submit" value="Post">
+                    <br/>
+                </form>
+            
+                 Logout:
+                    <form action="/logout" method="post" enctype="application/x-www-form-urlencoded">
+                        <label>Username:
+                            <input type="text" name="username" disabled/>
+                        </label>
+                        <br/>
+                        <label>Password:&nbsp;
+                            <input type="password" name="password" disabled>
+                        </label>
+                        <input type="submit" value="Logout">
+                    </form>
+            </div>
 
-            </label>
+            <script>
+            var validateUrl = "{% url 'validate' %}";
 
-            <button type="button" onclick="validate()">Validate Registration</button>
-
-            <br/>
-            <label>Confirm Password:&nbsp;
-                <input type="password" name="confirm_password">
-            </label>
-            <input type="submit" value="Post">
-            <br/>
-            <br/>
-        </form>
-
-        <div id="passwordMessage"></div>
-
-
-
-        Login:
-        <form action="/login" method="post" enctype="application/x-www-form-urlencoded">
-            {% csrf_token %}
-            <label>UB Email:
-                <input type="email" name="email"/>
-            </label>
-            <br/>
-            <label>Password:&nbsp;
-                <input type="password" name="password">
-            </label>
-            <input type="submit" value="Post">
-            <br/>
-        </form>
-    </div>
-
-    <script>
-    var validateUrl = "{% url 'validate' %}";
-
-    async function validate() {
+            async function validate() {
 
 
-        const password = document.getElementById("password").value;
-        const email = document.getElementById("email").value;
-        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                const password = document.getElementById("password").value;
+                const email = document.getElementById("email").value;
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-         const response = await fetch("{% url 'validate' %}", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                        "X-CSRFToken": csrfToken,
+                 const response = await fetch("{% url 'validate' %}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded",
+                                "X-CSRFToken": csrfToken,
 
-                    },
+                            },
 
-                    body: `password=${encodeURIComponent(password)}&email=${encodeURIComponent(email)}`
-                });
-
-
-        const result = await response.json();
+                            body: `password=${encodeURIComponent(password)}&email=${encodeURIComponent(email)}`
+                        });
 
 
-    const messageDiv = document.getElementById("passwordMessage");
-    let out = [];
-
-    if (String(result.valid_pass) === "False") {
-        out.push("PASSWORDS MUST BE 12 OR GREATER IN LENGTH");
-    }
-    if (String(result.valid_email) === "False") {
-        out.push("ONLY VALID UB EMAILS ACCEPTED");
-    }
-
-    if (out.length === 0) {
-        messageDiv.style.color = "green";
-        messageDiv.innerHTML = "VALID EMAIL AND PASS";
-    } else {
-        messageDiv.style.color = "red";
-        messageDiv.innerHTML = out.join("<br>");
-    }
-}
-</script>
+                const result = await response.json();
 
 
+                const messageDiv = document.getElementById("passwordMessage");
+                let out = [];
+
+                if (String(result.valid_pass) === "False") {
+                    out.push("PASSWORDS MUST BE 12 OR GREATER IN LENGTH");
+                }
+                if (String(result.valid_email) === "False") {
+                    out.push("ONLY VALID UB EMAILS ACCEPTED");
+                }
+
+                if (out.length === 0) {
+                    messageDiv.style.color = "green";
+                    messageDiv.innerHTML = "VALID EMAIL AND PASS";
+                } else {
+                    messageDiv.style.color = "red";
+                    messageDiv.innerHTML = out.join("<br>");
+                }
+            }
+            </script>
+     </section>
+          
     <script src="{% static 'js/functions.js' %}"></script>
-    <img src="{% static 'images/plant.jpg' %}" alt="A logo pic of a plant">
 </body>
 </html>
