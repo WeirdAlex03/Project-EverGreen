@@ -15,21 +15,23 @@ def getFileType(filePath):
     return mimetypes.guess_type(filePath)[0]  
 
 def indexHandler(request):
-    return render(request, 'index.html')
+    return render(request, 'evergreen/staticfiles/staticfiles/index.html')
 
 def fileHandler(request, fileName): # can handle img and text 
-    sanitizedfileName = quote(fileName) # get a clean full file path 
-    path = Path(settings.STATIC_ROOT) / sanitizedfileName
+    # sanitizedfileName = quote(fileName) # get a clean full file path 
+    # path = Path(settings.STATIC_ROOT) / sanitizedfileName
+
+    path = fileName
 
     allowedType = {'.css', '.html', '.js', '.png', '.jpg', '.jpeg', '.gif', '.mp3', '.mp4', '.xml', '.json', '.pdf','.ico'} # can add more, 
 
     if not path.suffix.lower() in allowedType: # to deal with user uploads 
         return HttpResponseNotFound("404 - File type not allowed")
     
-    #deal with /../ attacks 
-    rootPath = Path(settings.STATIC_ROOT).resolve() #.resolve get absolute path 
-    if not path.resolve().is_relative_to(rootPath):
-        return HttpResponseNotFound("404 - Invalid file path")
+    # #deal with /../ attacks 
+    # rootPath = Path(settings.STATIC_ROOT).resolve() #.resolve get absolute path 
+    # if not path.resolve().is_relative_to(rootPath):
+    #     return HttpResponseNotFound("404 - Invalid file path")
     
     if path.exists() and path.is_file(): # make sure its not a directory 
         contentType = getFileType(path)
