@@ -9,7 +9,7 @@ The development environment is being managed using [Poetry](https://python-poetr
 pip install poetry
 ```
 
-The virtual environment can be created locally by using the `poetry install` command. The environment can then be activated using the `poetry shell` command. This venv can then be deactivated by using the `exit` command. 
+The virtual environment can be created locally by using the `poetry install` command from the `evergreen` directory. The environment can then be activated using the `poetry shell` command. This venv can then be deactivated by using the `exit` command. 
 
 New package dependencies for the project can be added using the `poetry add <package-name-from-pip>` command. 
 
